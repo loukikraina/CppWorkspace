@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+#define MAX 10
+void push(char b);
+char pop();
+int top = -1;
+int stack[MAX];
+ 
+void main()
+{
+    char a[MAX],temp;
+    int i,flag=1;
+    clrscr();
+    printf("enter the expression---->\n");
+    gets(a);
+    for(i=0;i<strlen(a);i++)
+    {
+        if(a[i]=='(' || a[i]=='[' || a[i]=='{')
+            push(a[i]);
+        if(a[i]==')' || a[i]==']' || a[i]=='}')
+            if (top==-1)
+                flag=0;
+            else
+            {
+                temp = pop();
+                if(a[i]==')' && (a[i]==']' || a[i]=='}'))
+                    flag = 0;
+                if(a[i]==']' && (a[i]==')' || a[i]=='}'))
+                    flag = 0;
+                if(a[i]=='}' && (a[i]==']' || a[i]==')'))
+                    flag = 0;
+            }
+    }
+if(top >= 0)
+    flag = 0;
+if(flag == 1)
+    printf("valid");
+else
+    printf("invalid");
+getch();
+}
+
+void push(char b)
+{
+    if (top==(MAX-1))
+        printf("stack overflow");
+    else
+        {
+            top = top +1;
+            stack[top]= b;
+        }
+}
+char pop()
+{
+    if(top == -1)
+        {
+		printf("stack underflow");
+		getch();
+		exit();
+		return '@';
+	}
+    else
+        return (stack[top--]);
+}
